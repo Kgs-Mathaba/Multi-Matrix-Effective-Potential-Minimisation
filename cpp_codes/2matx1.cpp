@@ -16,6 +16,14 @@ using namespace std;
 int main(){
 
 
+	// set  some constants
+	const int n_thooft = 10;
+    const int n_thooft_squared = pow(n_thooft,2);
+    const int omega_length = 4;
+    const int max_length = 2*omega_length -2; 
+    int start = 0;
+    int end = 0;
+
 	/* Create random engine with the help of seed */
     unsigned seed = chrono::steady_clock::now().time_since_epoch().count(); 
     default_random_engine e (seed); 
@@ -24,8 +32,9 @@ int main(){
   	/* Here, we have used mean=0, and standard deviation=1. */
     normal_distribution<double> distN(0,1); 
     
-    const int  n_thooft = 10;
-    const int n_thooft_squared = pow(n_thooft,2);
+    
+
+
     //cout<<"\nEnter size of n_thooft: ";
     //cin>>n_thooft;
     cout<<"\nNormal distribution for "<<n_thooft<<" samples (mean=0, standard deviation=1) =>\n";
