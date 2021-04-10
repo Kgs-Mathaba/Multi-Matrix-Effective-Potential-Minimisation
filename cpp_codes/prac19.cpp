@@ -31,13 +31,16 @@ void print(std::vector <int> const &a) {
 
 // Function to check if an array is
 // subarray of another array
-bool isSubArray(int A[], int B[], int n, int m)
+bool is_cyclic_perm(std::vector<int>  A, std::vector<int>  B)
 {
     // Two pointers to traverse the arrays
     int i = 0, j = 0;
 
+    auto m = A.size();
+    auto n = B.size();
+
     // Traverse both arrays simultaneously
-    while (i < n && j < m) {
+    while (i < m&& j < n) {
 
         // If element matches
         // increment both pointers
@@ -48,7 +51,7 @@ bool isSubArray(int A[], int B[], int n, int m)
 
             // If array B is completely
             // traversed
-            if (j == m)
+            if (j == n)
                 return true;
         }
         // If not,
@@ -141,7 +144,14 @@ int main()
 
             
             // from third loop run comparison
-            std::vector<int> loop1;
+            std::vector<int> loop1_concat = loop;
+            loop1_concat.insert(loop1_concat.end(), loop.begin(), loop.end());
+            
+             
+            /*
+            Check if loop is a cyclic perm of previous loops by concatenating it by itself.
+            Then check if any previous loops are contained.
+            */
             
             bool result = false;
             if(c>1){
@@ -155,22 +165,15 @@ int main()
                         cout << "loop2 = ";
                         print(loop2);
                         cout << endl;
-                        //start loop that rotates loop and compares with loop2
-                        loop1 = loop;
-                        for(int e=1; e<row_index;++e){
-                            
-                            std::rotate(loop1.begin(), loop1.begin()+1, loop1.end());
-                            // print loop
-                            cout << "loop1 = ";
-                            print(loop1);
-                            cout << endl;
 
-                            result = std::equal(loop1.begin(), loop1.end(), loop2.begin());
-                            cout << "result = " << result << endl;
-                            if (result)
-                                {std::cout << "vec1 contains vec2 at position 2 " << std::endl;
-                                 break;}
-                            }
+                        
+                        result = is_cyclic_perm(loop1_concat, loop2);
+                        if(result){
+                            cout << "vec1 contains vec2 at position 2 " << endl;
+                        }
+                        
+
+                        
                         if(result){break;}
                     }
                 }
