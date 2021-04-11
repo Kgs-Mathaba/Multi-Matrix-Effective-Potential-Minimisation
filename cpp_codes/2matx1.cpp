@@ -69,7 +69,7 @@ int main(){
 	// set  some constants
 	const int n_thooft = 10;
     const int n_thooft_squared = pow(n_thooft,2);
-    const int omega_length = 3;
+    const int omega_length = 4;
     const int max_length = 2*omega_length -2; 
     int start = 0;
     int end = 0;
@@ -93,10 +93,7 @@ int main(){
     // initialize vector of doubles and fill with randoms generated from normal distribution.
     VectorXd x(n_thooft*(n_thooft+1));
     for (int i=0; i<n_thooft*(n_thooft+1); i++)
-    {
-      x[i] = distN(e);
-
-    }   
+    	{x[i] = distN(e);}   
     
 
 
@@ -165,7 +162,7 @@ int main(){
     	int row_index = i; // row elements
     	int col_index = pow(2,i); // col elements
 
-    	cout << "i = " << i << endl ;
+    	//cout << "i = " << i << endl ;
     	//initializing 2d array binary_array
     	
     	int binary_array[row_index][col_index];
@@ -182,17 +179,17 @@ int main(){
     	}
 
         // Display binary array
-    	cout << "binary_array = \n";
+    	//cout << "binary_array = \n";
     	// print binary_array
-    	for(int c=0; c < col_index; c++){
-    		for(int r=0; r < row_index; r++){
+    	//for(int c=0; c < col_index; c++){
+    	//	for(int r=0; r < row_index; r++){
     			
-    			cout << binary_array[r][c] << " " ;
-    		}
+    	//		cout << binary_array[r][c] << " " ;
+    	//	}
     		// Newline for new row
-   			cout <<  endl;
-    	}
-    	cout << endl;
+   		//	cout <<  endl;
+    	//}
+    	//cout << endl;
 
         
 
@@ -201,24 +198,24 @@ int main(){
     	for(int c=0; c < col_index; c++)
     	{
     		//for each row_index of binary_array create loop (vector)
-    		std::vector<int> loop;
+    		std::vector<int> loop1;
 
             
 
 
     		// fill loop with row_index elements of binary_array
     		for (int r = 0; r < row_index; ++r)
-    		  {loop.push_back( binary_array[r][c] );}
+    		  {loop1.push_back( binary_array[r][c] );}
 
             // print loop
-            cout << "loop = ";
-            print(loop);
-            cout << endl;
+            //cout << "loop1 = ";
+            //print(loop1);
+            //cout << endl;
 
             
             // from third loop run comparison
-            std::vector<int> loop1_concat = loop;
-            loop1_concat.insert(loop1_concat.end(), loop.begin(), loop.end());
+            std::vector<int> loop1_concat = loop1;
+            loop1_concat.insert(loop1_concat.end(), loop1.begin(), loop1.end());
             
              
             /*
@@ -235,9 +232,9 @@ int main(){
                         std::vector<int> loop2;
                         for (int r = 0; r < row_index; ++r)
                         {loop2.push_back( binary_array[r][d] );}
-                        cout << "loop2 = ";
-                        print(loop2);
-                        cout << endl;
+                        //cout << "loop2 = ";
+                        //print(loop2);
+                        //cout << endl;
 
                         
                         result = is_cyclic_perm(loop1_concat, loop2);
@@ -250,7 +247,7 @@ int main(){
 
     		// add loop to loop_list
             if(!result)
-    		{loop_list.push_back(loop);}
+    		{loop_list.push_back(loop1);}
     	   }
      }
 
@@ -271,8 +268,50 @@ int main(){
 
 
 
+    
+    Eigen::Matrix2d mat;
+    mat << 1, 2, 3, 4;
+    cout << "Here is mat: \n" << mat << endl;
+    cout << "Here is mat*mat: \n" << mat*mat << endl;
 
 
+    // Dynamic column vector of double complex numbers 
+    Eigen::VectorXcd loop(max_size);
+    loop[0] = 1.0 + 0.0if;
+
+
+    // Build loops
+    Eigen::MatrixXcd loop_matrix;
+    
+    for(int i=0; i< loop_list.size(); ++i){
+    	
+    	if(loop_list[i][0] ==1 )
+    		{	
+    			loop_matrix = matrices_array_0;
+    			//cout << "start with matrix 1 \n";
+    		}
+    	else
+    		{
+    			loop_matrix = matrices_array_1;	
+    			//cout << "start with matrix 2 \n";
+    		}
+
+    	for(int j=1; j<loop_list[i].size(); ++j){
+
+    		if(loop_list[i][j] ==1){
+    			  loop_matrix *=matrices_array_0;}
+    		
+    		else
+    			{ loop_matrix *=matrices_array_1;}
+    	}
+
+    	loop[i+1] = loop_matrix.trace();
+
+	}
+    
+    cout << "loop = \n" << loop << endl;
+
+    
 
 	return 0;
 }
