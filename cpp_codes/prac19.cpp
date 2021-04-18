@@ -73,7 +73,8 @@ bool is_cyclic_perm(std::vector<int>  A, std::vector<int>  B)
 int main()
 {
 
-	// set  some constants
+	
+    // set  some constants
 	const int n_thooft = 10;
     const int n_thooft_squared = pow(n_thooft,2);
     const int omega_length = 4;
@@ -169,12 +170,9 @@ int main()
                         
                         result = is_cyclic_perm(loop1_concat, loop2);
                         if(result){
-                            cout << "vec1 contains vec2 at position 2 " << endl;
-                        }
-                        
 
-                        
-                        if(result){break;}
+                            break;
+                        }
                     }
                 }
 
@@ -198,6 +196,9 @@ int main()
 
     int max_size = loop_list.size()+1;
     cout << "total number of loops = " << max_size << endl;
+
+    // Build loops
+    
 
     return 0;
 }
