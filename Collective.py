@@ -1,5 +1,3 @@
-
-
 import numpy as np
 from scipy import linalg
 #from itertools import combinations
@@ -38,10 +36,10 @@ def initialize_loops(omega_dim, num_loops):
     LnJ -- initialized complex array of shape (omega_dim,)
     """
 
-    loop=np.zeros ((num_loops+1),dtype=complex)
-    omega=np.zeros ((omega_dim,omega_dim),dtype=complex)
-    little_omega=np.zeros ((omega_dim),dtype=complex)
-    LnJ=np.zeros ((omega_dim),dtype=complex)
+    loop=np.zeros((num_loops+1),dtype=complex)
+    omega=np.zeros((omega_dim,omega_dim),dtype=complex)
+    little_omega=np.zeros((omega_dim),dtype=complex)
+    LnJ=np.zeros((omega_dim),dtype=complex)
 
     return loop, omega, little_omega, LnJ
 

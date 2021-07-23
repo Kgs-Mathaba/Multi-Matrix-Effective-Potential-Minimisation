@@ -147,7 +147,7 @@ print ("Loops generated. Time taken : ", (end1-start1), " seconds")
 print ()
 
 max_size = numb_tuples_list [max_length][1]
-print ("Total number of loops up to length ", max_length, " : ", max_size)
+print ("Total number of loops up to length ", max_length, ": ", max_size)
 print ("List of loops :")
 i=0
 for x in loop_list:
@@ -160,42 +160,6 @@ for i in range (max_length+1):
     print ("Number of loops of length " ,i, " : ", num,)
 
 print()
-
-
-
-print ()
-print ("Identifying conjugate loops")
-
-start_adjoint = timer()
-adjoint_loops=np.zeros ((max_size+1),dtype=int)
-adjoint_loops[0]=0
-for i in range (1,max_size+1):
-    adjoint =  cyclic_generator(np.flip(loop_list[i]))
-    temp_adjoint = adjoint.T
-    temp_len = np.ma.size(temp_adjoint, axis=0)
-    adjoint = np.reshape(temp_adjoint,(temp_len,))
-
-    if all (adjoint ==loop_list[i]):
-        adjoint_loops[i]=i
-    else:
-        start=numb_tuples_list [temp_len][0]
-        end=numb_tuples_list [temp_len][1]
-        for p in range(start,end+1):
-            if compare (loop_list[p],adjoint): adjoint_loops[i]=p
-    """
-    if not (all (adjoint ==loop_list[i])) :
-        print ("Adjoint of loop ", i , loop_list[i], " up to cyclic is ", adjoint,". This is loop ", adjoint_loops[i])
-    """
-
-end_adjoint = timer()
-print("Done. Time taken :", (end_adjoint - start_adjoint))
-print (" Here is adjoint_loops: ", adjoint_loops)
-#print("dtype of adjoint_loops: ", type(adjoint_loops))
-
-
-print("\n")
-
-
 
 print ("Joining loops and generating Omega matrix ")
 omega_size = numb_tuples_list [omega_length][1]
@@ -425,22 +389,19 @@ if yes_or_no=="y":
             print ("Loop", i,"=",loop_list[i],"breaks into", "Loop", nonzero_loop1_index[i,indx],"=", loop_list[nonzero_loop1_index[i,indx]], "and Loop", nonzero_loop2_index[i,indx], "=", loop_list[nonzero_loop2_index[i,indx]],nonzero_z[i,indx], "times." )
             #print ("No. splittings ", non_zero_lo[i], "Loop", i,"=",loop_list[i],"breaks into", "Loop", nonzero_loop1_index[i,indx],"=", loop_list[nonzero_loop1_index[i,indx]], "and Loop", nonzero_loop2_index[i,indx], "=", loop_list[nonzero_loop2_index[i,indx]],nonzero_z[i,indx], "times." )
 
-print("\n")
-import os
-import pathlib
-from pathlib import Path
 
 
-PATH = pathlib.Path(__file__).parent.absolute() #get the parent directory of the script
-current_folder = str(PATH)
-print("PATH = ", current_folder)
-data_folder_name = "data" #input('name your data folder. E.g. "data": ')
-data_folder = os.path.join(current_folder, data_folder_name)
-print("Data folder is :", data_folder)
-data_file_name = "lmax_"+str(omega_length)+"_collective_info_v2.npy"
-data_file = os.path.join(data_folder, data_file_name)
-os.makedirs(data_folder,  exist_ok=True)
-with open(data_file, 'wb') as f:
+
+
+
+
+
+
+file_name = "lmax_"+str(omega_length)+"_collective_info_v3.npy"
+print()
+#print(file_name )
+
+with open(file_name, 'wb') as f:
     np.save(f,omega_length)
     np.save(f,max_length)
     np.save(f,numb_tuples_list)
@@ -448,28 +409,27 @@ with open(data_file, 'wb') as f:
     np.save(f,non_zero)
     np.save(f,nonzero_index)
     np.save(f,nonzero_y)
+    np.save(f,y)
     np.save(f,non_zero_lo)
     np.save(f,nonzero_loop1_index)
     np.save(f,nonzero_loop2_index)
     np.save (f, nonzero_z)
-    np.save(f, adjoint_loops)
+    np.save (f, z)
 
-with open(data_file, 'rb') as f:
+with open(file_name, 'rb') as f:
     loaded_omega_length=np.load(f)
     loaded_max_length=np.load(f)
     loaded_numb_tuples_list=np.load(f,allow_pickle=True)
     loaded_loop_list=np.load(f,allow_pickle=True)
-    #loaded_y=np.load(f,allow_pickle=True)
     loaded_non_zero=np.load(f)
     loaded_nonzero_index=np.load(f)
     loaded_nonzero_y=np.load(f)
+    loaded_y=np.load(f,allow_pickle=True)
     loaded_non_zero_lo=np.load(f)
     loaded_nonzero_loop1_index=np.load(f)
     loaded_nonzero_loop2_index=np.load(f)
     loaded_nonzero_z=np.load(f)
-    #loaded_z = np.load(f,allow_pickle=True)
-    loaded_adjoint_loops = np.load(f, allow_pickle=True)
-
+    loaded_z = np.load(f,allow_pickle=True)
 
 print()
 print ("Loops, splitting and joining information stored in file "+"lmax_"+str(omega_length)+"_collective_info_v2.npy")
@@ -477,8 +437,7 @@ print()
 print ("Info extracted from file")
 print ("lmax = ", loaded_omega_length)
 print ("max length =", loaded_max_length)
-print ("loaded_numb_tuples_list = \n", loaded_numb_tuples_list)
-print ("loaded_adjoint_loops: ", loaded_adjoint_loops)
+print (loaded_numb_tuples_list)
 print()
 max_size = loaded_numb_tuples_list [loaded_max_length][1]
 print ("Total number of loops up to length ", loaded_max_length, ": ", max_size)
@@ -532,4 +491,3 @@ for i in range (1,omega_size+1):
 
 #for y in loaded_master_field :
     #print (y)
-

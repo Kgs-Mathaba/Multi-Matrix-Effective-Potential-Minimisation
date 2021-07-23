@@ -7,6 +7,8 @@ from scipy.optimize import minimize
 from scipy.special import binom
 from numpy.linalg import multi_dot
 from timeit import default_timer as timer
+import sys
+
 
 def compare (Loop1, Loop2):
 
@@ -109,7 +111,8 @@ Main program
 
 
 print ()
-lmax = input ("Enter lmax :    ")
+lmax = sys.argv[1] if len(sys.argv) > 1 else  input ("Enter lmax :    ")
+#print("Number of elements including main program:",len(sys.argv))
 omega_length = int(lmax)
 #omega_length = 6
 max_length = 2*omega_length-2
@@ -161,9 +164,6 @@ for i in range (max_length+1):
 
 print()
 
-
-
-print ()
 print ("Identifying conjugate loops")
 
 start_adjoint = timer()
@@ -426,9 +426,10 @@ if yes_or_no=="y":
             #print ("No. splittings ", non_zero_lo[i], "Loop", i,"=",loop_list[i],"breaks into", "Loop", nonzero_loop1_index[i,indx],"=", loop_list[nonzero_loop1_index[i,indx]], "and Loop", nonzero_loop2_index[i,indx], "=", loop_list[nonzero_loop2_index[i,indx]],nonzero_z[i,indx], "times." )
 
 print("\n")
+
+
 import os
 import pathlib
-from pathlib import Path
 
 
 PATH = pathlib.Path(__file__).parent.absolute() #get the parent directory of the script
